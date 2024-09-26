@@ -1,0 +1,4 @@
+*.Rhistory
+*.png
+.Rproj.user
+/Archive/
