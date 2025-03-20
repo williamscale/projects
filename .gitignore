@@ -2,3 +2,6 @@
 *.png
 .Rproj.user
 /Archive/
+/ERCOT/viz/
+/ERCOT/data/
+/ERCOT/Archive/
