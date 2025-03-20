@@ -457,6 +457,8 @@ ggplot(data = data.train.full,
   ylab('Daily Load [MW]') +
   theme_solarized_2()
 
+min.temp.pred <- -m$coefficients[2] / (2 * m$coefficients[3])
+
 # Predict -----------------------------------------------------------------
 
 data.test <- data.test %>%
@@ -465,6 +467,8 @@ data.test <- data.test %>%
 mae <- mean(abs(data.test$daily.load - data.test$pred))
 mse <- mean((data.test$daily.load - data.test$pred)^2)
 rmse <- sqrt(mse)
+
+
 
 ggplot(data = data.test,
        aes(x = operatingDay)) +
