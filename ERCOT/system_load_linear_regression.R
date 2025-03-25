@@ -462,24 +462,23 @@ min.temp.pred <- -m$coefficients[2] / (2 * m$coefficients[3])
 # Predict -----------------------------------------------------------------
 
 data.test <- data.test %>%
-  mutate(pred = predict(m, newdata = data.test))
+  mutate(pred = predict(m, newdata = data.test),
+         err = pred - daily.load)
 
 mae <- mean(abs(data.test$daily.load - data.test$pred))
 mse <- mean((data.test$daily.load - data.test$pred)^2)
 rmse <- sqrt(mse)
+total.err <- sum(data.test$daily.load - data.test$pred)
+sum(data.test$daily.load)
+sum(data.test$pred)
+
+data.test %>% summarize(count.over = sum(pred > daily.load),
+                        count.under = sum(pred < daily.load))
 
 
 
-ggplot(data = data.test,
-       aes(x = operatingDay)) +
-  geom_point(aes(y = daily.load)) +
-  geom_point(aes(y = pred), color = 'red') +
-  xlab('Date') +
-  ylab('Load') +
-  theme_solarized_2()
 
 
-inflection point of curve?
-# data.test %>% summarize(count.over = sum(pred > daily.load),
-#                         over.mean = 
-#                         count.under = sum(pred < daily.load))
+
+
+
