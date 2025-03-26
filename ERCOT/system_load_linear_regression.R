@@ -291,17 +291,29 @@ ggplot(data = data.train,
 
 ggplot(data = data.train,
        aes(x = Min)) +
-  geom_histogram(bins = 16) +
+  geom_histogram(bins = 16, color = '#002b36') +
   xlab('Min Temp [F]') +
   ylab('Daily Load [MW]') +
   theme_solarized_2()
 
 ggplot(data = data.train,
        aes(x = Max)) +
-  geom_histogram(bins = 16) +
+  geom_histogram(bins = 16, color = '#002b36') +
   xlab('Max Temp [F]') +
   ylab('Daily Load [MW]') +
   theme_solarized_2()
+
+min(data.train$Min)
+max(data.train$Min)
+mean(data.train$Min)
+median(data.train$Min)
+sd(data.train$Min)
+
+min(data.train$Max)
+max(data.train$Max)
+mean(data.train$Max)
+median(data.train$Max)
+sd(data.train$Max)
 
 # Build Models ------------------------------------------------------------
 
@@ -463,7 +475,8 @@ min.temp.pred <- -m$coefficients[2] / (2 * m$coefficients[3])
 
 data.test <- data.test %>%
   mutate(pred = predict(m, newdata = data.test),
-         err = pred - daily.load)
+         err = pred - daily.load,
+         err.pct = err / daily.load)
 
 mae <- mean(abs(data.test$daily.load - data.test$pred))
 mse <- mean((data.test$daily.load - data.test$pred)^2)
